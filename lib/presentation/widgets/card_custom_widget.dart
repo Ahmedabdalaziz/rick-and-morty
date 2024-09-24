@@ -69,20 +69,34 @@ class CustomCard extends StatelessWidget {
             left: 0,
             right: 0,
             child: Container(
-              height: 50,
+              height: 70,
               decoration: BoxDecoration(
                 color: Colors.black.withOpacity(0.5),
                 borderRadius: const BorderRadius.vertical(
                   bottom: Radius.circular(15),
                 ),
               ),
-              child: Center(
-                child: Text(
-                  "${character!.name}",
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                  ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "${character!.name}",
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      "Status: ${character!.status}",
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

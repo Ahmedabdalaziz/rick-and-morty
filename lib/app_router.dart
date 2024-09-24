@@ -8,11 +8,9 @@ import 'package:rick_and_morty/presentation/screens/home_screen.dart';
 
 class AppRouter {
   late CharacterRepository characterRepository;
-  late CharacterCubit characterCubit;
 
   AppRouter() {
     characterRepository = CharacterRepository(CharacterServices());
-    characterCubit = CharacterCubit(characterRepository);
   }
 
   Route? generateRoute(RouteSettings settings) {
@@ -20,9 +18,10 @@ class AppRouter {
       case Routes.home:
         return MaterialPageRoute(
             builder: (context) => BlocProvider(
-                  create: (context) => characterCubit,
-                  child: const HomeScreen(),
-                ));
+              create: (context) =>
+                  CharacterCubit(characterRepository),
+              child: const HomeScreen(),
+            ));
       case Routes.details:
         return MaterialPageRoute(builder: (context) => const DetailsScreen());
       default:
@@ -30,7 +29,6 @@ class AppRouter {
     }
   }
 }
-
 class Routes {
   static const String home = '/home';
   static const String details = '/details';

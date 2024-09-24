@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:dio/dio.dart';
+import 'package:rick_and_morty/data/models/character_model.dart';
 import 'package:rick_and_morty/helper/constants.dart';
 
 class CharacterServices {
@@ -12,14 +13,18 @@ class CharacterServices {
       receiveTimeout: const Duration(seconds: 20),
       receiveDataWhenStatusError: true,
     );
+
+    dio = Dio(options);
   }
 
-  Future<List<dynamic>> getCharacters() async {
+  Future<List<Character>> getCharacters() async {
     try {
-      Response response = await dio.get(characterUrl);
+      Response response = await dio.get("character");
       if (response.statusCode == 200) {
-        log(response.data);
-        return response.data;
+        log("success dio");
+        return (response.data['results'] as List)
+            .map((character) => Character.fromJson(character))
+            .toList();
       } else {
         throw Exception('Failed to get characters');
       }

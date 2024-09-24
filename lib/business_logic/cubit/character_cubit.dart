@@ -1,3 +1,4 @@
+
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
@@ -19,7 +20,7 @@ class CharacterCubit extends Cubit<CharacterState> {
       final characters = await characterRepository.getCharacters();
       emit(CharacterLoaded(characters));
       this.characters = characters;
-      print("$characters");
+      log("success cubit");
       return characters;
     } catch (error) {
       emit(CharacterError('Failed to fetch characters'));

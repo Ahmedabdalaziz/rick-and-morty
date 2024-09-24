@@ -10,7 +10,11 @@ class CharacterRepository {
 
   Future<List<Character>> getCharacters() async {
     final charactersJson = await characterServices.getCharacters();
-    log(charactersJson as String);
-    return charactersJson.map((json) => Character.fromJson(json)).toList();
+
+    log("success repo");
+
+    return (charactersJson as List)
+        .map((json) => Character.fromJson(json as Map<String, dynamic>))
+        .toList();
   }
 }
