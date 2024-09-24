@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:rick_and_morty/helper/constants.dart';
 
@@ -17,6 +18,7 @@ class CharacterServices {
     try {
       Response response = await dio.get(characterUrl);
       if (response.statusCode == 200) {
+        log(response.data);
         return response.data;
       } else {
         throw Exception('Failed to get characters');

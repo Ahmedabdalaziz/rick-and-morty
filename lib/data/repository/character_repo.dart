@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:rick_and_morty/data/api_services/character_services.dart';
 import 'package:rick_and_morty/data/models/character_model.dart';
 
@@ -8,6 +10,7 @@ class CharacterRepository {
 
   Future<List<Character>> getCharacters() async {
     final charactersJson = await characterServices.getCharacters();
+    log(charactersJson as String);
     return charactersJson.map((json) => Character.fromJson(json)).toList();
   }
 }

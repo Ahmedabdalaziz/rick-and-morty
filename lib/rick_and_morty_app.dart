@@ -16,7 +16,7 @@ class RickAndMortyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       onGenerateRoute: router.generateRoute,
-      home: Container(),
+      initialRoute: Routes.home,
     );
   }
 }
