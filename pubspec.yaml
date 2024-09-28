@@ -37,8 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   dio: ^5.7.0
   flutter_bloc: ^8.1.6
-  flutter_offline: ^0.2.0
-  connectivity_plus: ^2.2.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

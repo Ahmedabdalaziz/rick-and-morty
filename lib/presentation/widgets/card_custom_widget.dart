@@ -11,97 +11,108 @@ class CustomCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.all(10),
+      height: 350,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
+        color: AppColors.surfaceColor,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.2),
-            blurRadius: 5,
-            offset: const Offset(0, 5),
+            color: AppColors.greyMedium.withOpacity(0.2),
+            blurRadius: 8,
+            offset: const Offset(0, 4),
           ),
         ],
       ),
-      child: Stack(
-        children: [
-          Image.network(
-            "${character!.image}",
-            height: 200,
-            width: double.infinity,
-            fit: BoxFit.cover,
-            loadingBuilder: (BuildContext context, Widget child,
-                ImageChunkEvent? loadingProgress) {
-              if (loadingProgress == null) {
-                return child;
-              } else {
-                return Container(
-                  height: 200,
-                  width: double.infinity,
-                  color: Colors.black.withOpacity(0.1),
-                  child: Center(
-                    child: CircularProgressIndicator(
-                      value: loadingProgress.expectedTotalBytes != null
-                          ? loadingProgress.cumulativeBytesLoaded /
-                              loadingProgress.expectedTotalBytes!
-                          : null,
-                      color: AppColors.primaryColor,
-                    ),
-                  ),
-                );
-              }
-            },
-            errorBuilder: (context, error, stackTrace) {
-              return Container(
-                height: 200,
-                width: double.infinity,
-                color: Colors.black.withOpacity(0.1),
-                child: const Center(
-                  child: Icon(
-                    Icons.error,
-                    color: Colors.red,
-                    size: 40,
-                  ),
-                ),
-              );
-            },
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(15),
+        child: Stack(
+          children: [
+            Image.network(
+              "${character!.image}",
+              height: 350,
+              width: double.infinity,
+              fit: BoxFit.cover,
+              loadingBuilder: (context, child, loadingProgress) {
+                if (loadingProgress == null) return child;
+                return _buildLoadingIndicator(loadingProgress);
+              },
+              errorBuilder: (context, error, stackTrace) {
+                return _buildErrorPlaceholder();
+              },
+            ),
+            _buildCharacterInfo(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLoadingIndicator(ImageChunkEvent loadingProgress) {
+    return Container(
+      height: 350,
+      width: double.infinity,
+      color: AppColors.greyLight.withOpacity(0.1),
+      child: Center(
+        child: CircularProgressIndicator(
+          value: loadingProgress.expectedTotalBytes != null
+              ? loadingProgress.cumulativeBytesLoaded /
+                  loadingProgress.expectedTotalBytes!
+              : null,
+          color: AppColors.primaryColor,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildErrorPlaceholder() {
+    return Container(
+      height: 350,
+      width: double.infinity,
+      color: AppColors.greyLight.withOpacity(0.1),
+      child: const Center(
+        child: Icon(
+          Icons.error,
+          color: AppColors.errorColor,
+          size: 40,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCharacterInfo() {
+    return Positioned(
+      bottom: 0,
+      left: 0,
+      right: 0,
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: AppColors.primaryVariant.withOpacity(0.7),
+          borderRadius: const BorderRadius.vertical(
+            bottom: Radius.circular(15),
           ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              height: 70,
-              decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.5),
-                borderRadius: const BorderRadius.vertical(
-                  bottom: Radius.circular(15),
-                ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "${character!.name}",
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      "Status: ${character!.status}",
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ],
-                ),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "${character!.name}",
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
               ),
             ),
-          ),
-        ],
+            const SizedBox(height: 5),
+            Text(
+              "Status: ${character!.status}",
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 10,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

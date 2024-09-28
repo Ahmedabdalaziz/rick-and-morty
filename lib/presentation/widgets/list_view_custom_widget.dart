@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:rick_and_morty/data/models/character_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:rick_and_morty/presentation/widgets/card_custom_widget.dart';
+
+import '../../data/models/character_model.dart';
 
 class ListViewCustomWidget extends StatelessWidget {
   final List<Character> characters;
@@ -12,7 +13,7 @@ class ListViewCustomWidget extends StatelessWidget {
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        childAspectRatio: 1.5,
+        childAspectRatio: 0.8,
         crossAxisSpacing: 1,
         mainAxisSpacing: 1,
       ),
