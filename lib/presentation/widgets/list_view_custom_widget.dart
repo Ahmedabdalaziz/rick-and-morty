@@ -1,6 +1,8 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:rick_and_morty/helper/extension.dart';
 import 'package:rick_and_morty/presentation/widgets/card_custom_widget.dart';
 
+import '../../app_router.dart';
 import '../../data/models/character_model.dart';
 
 class ListViewCustomWidget extends StatelessWidget {
@@ -19,8 +21,17 @@ class ListViewCustomWidget extends StatelessWidget {
       ),
       itemCount: characters.length,
       itemBuilder: (BuildContext context, int index) {
-        return CustomCard(
-          character: characters[index],
+        final character = characters[index];
+        return GridTile(
+          child: GestureDetector(
+            onTap: () {
+              context.pushNamed(Routes.details, argument: character);
+            },
+            child: Hero(
+              tag: 'hero-tag-${character.id}',
+              child: CustomCard(character: character),
+            ),
+          ),
         );
       },
     );

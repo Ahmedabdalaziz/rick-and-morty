@@ -5,6 +5,7 @@ class Character {
   String? species;
   String? type;
   String? gender;
+  Origin? origin; // Add the origin property
   String? image;
   List<String>? episode;
   String? url;
@@ -17,6 +18,7 @@ class Character {
     this.species,
     this.type,
     this.gender,
+    this.origin, // Add origin to the constructor
     this.image,
     this.episode,
     this.url,
@@ -31,10 +33,26 @@ class Character {
       species: json["species"],
       type: json["type"],
       gender: json["gender"],
+      origin: Origin.fromJson(json["origin"]),
+      // Parse origin
       image: json["image"],
       episode: List<String>.from(json["episode"].map((x) => x)),
       url: json["url"],
       created: json["created"],
+    );
+  }
+}
+
+class Origin {
+  String? name;
+  String? url;
+
+  Origin({this.name, this.url});
+
+  factory Origin.fromJson(Map<String, dynamic> json) {
+    return Origin(
+      name: json["name"],
+      url: json["url"],
     );
   }
 }
